@@ -2,10 +2,8 @@ $MiningClient::revision = 2;
 
 function clientCmdMiningClient_receiveHandshake() {
 	echo("CLIENT: RECEIVED HANDSHAKE");
-	exec("./gui.gui");
 	echo("CLIENT: SENT HANDSHAKE");
 	commandToServer('MiningServer_receiveHandshake');
-	MiningClient_dateLoop();
 }
 
 function clientCmdMiningClient_receiveVar(%type,%arg1,%arg2) {
@@ -37,7 +35,18 @@ function MiningClient_dateLoop() {
 	CurrentDateTimeText.setText("<font:Palatino Linotype Bold:16><color:00aaff><just:center>" @ getDateTime());
 }
 
+// christ, Blockland, please
+function initMiningGUI() {
+	exec("./gui.gui");
+	MiningClient_dateLoop();
+	commandToServer('MiningServer_requestGUIVars');
+}
+
 package MiningClientPackage {
+	function PlayGui::onWake(%this) {
+		parent::onWake(%this);
+		schedule(100,0,initMiningGUI);
+	}
 	function PlayGui::onSleep(%this) {
 		if(isObject(MiningHUD_Wrapper)) {
 			MiningHUD_Wrapper.delete();
