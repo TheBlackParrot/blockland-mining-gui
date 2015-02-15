@@ -1,4 +1,4 @@
-$MiningClient::revision = 2;
+$MiningClient::revision = 3;
 
 function clientCmdMiningClient_receiveHandshake() {
 	echo("CLIENT: RECEIVED HANDSHAKE");
