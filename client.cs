@@ -1,3 +1,5 @@
+$MiningClient::revision = 2;
+
 function clientCmdMiningClient_receiveHandshake() {
 	echo("CLIENT: RECEIVED HANDSHAKE");
 	exec("./gui.gui");
