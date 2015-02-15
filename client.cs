@@ -4,6 +4,7 @@ function clientCmdMiningClient_receiveHandshake() {
 	echo("CLIENT: RECEIVED HANDSHAKE");
 	echo("CLIENT: SENT HANDSHAKE");
 	commandToServer('MiningServer_receiveHandshake');
+	activatePackage(MiningClientPackage);
 }
 
 function clientCmdMiningClient_receiveVar(%type,%arg1,%arg2) {
@@ -50,9 +51,9 @@ package MiningClientPackage {
 	function PlayGui::onSleep(%this) {
 		if(isObject(MiningHUD_Wrapper)) {
 			MiningHUD_Wrapper.delete();
+			deactivatePackage(MiningClientPackage);
 			cancel($MiningClient::DateLoop);
 		}
 		parent::onSleep(%this);
 	}
 };
-activatePackage(MiningClientPackage);
